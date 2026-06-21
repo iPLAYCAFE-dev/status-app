@@ -1,31 +1,44 @@
-# Change these first
-owner: upptime # Your GitHub organization or username, where this repository lives
-repo: upptime # The name of this repository
+# Upptime config — iPLAYCAFE (.app brand)  →  status.iplaycafe.app
+# Copy as `.upptimerc.yml` into `iPLAYCAFE-dev/status-app` (from the upptimejs/upptime template, PUBLIC).
+# Schema: https://upptime.js.org/docs/configuration
+
+owner: iPLAYCAFE-dev
+repo: status-app
 
 sites:
-  - name: Google
-    url: https://www.google.com
-  - name: Wikipedia
-    url: https://en.wikipedia.org
-  - name: Hacker News
-    url: https://news.ycombinator.com
-  - name: Test Broken Site
-    url: https://thissitedoesnotexist.koj.co
+  # Torrust BitTorrent tracker (Bunny Magic Containers — kept). /health_check returns 200.
+  - name: Tracker (Torrust)
+    url: https://tracker.iplaycafe.app/health_check
+    expectedStatusCodes:
+      - 200
+    maxResponseTime: 5000
+    # The tracker speaks BitTorrent on /announce + /scrape (not browser-HTTP); do NOT monitor those
+    # bare (they need query params -> 4xx). /health_check is the canonical liveness signal.
+
+  # lynx / iPLAYCAFE product (InsForge-backed).
+  # TODO: set the real product public URL/health endpoint before first run (placeholder below).
+  - name: iPLAYCAFE app (lynx)
+    url: https://iplaycafe.app/
+    expectedStatusCodes:
+      - 200
+      - 301
+      - 302
+    maxResponseTime: 5000
 
 status-website:
-  # Add your custom domain name, or remove the `cname` line if you don't have a domain
-  # Uncomment the `baseUrl` line if you don't have a custom domain and add your repo name there
-  cname: demo.upptime.js.org
-  # baseUrl: /your-repo-name
-  logoUrl: https://raw.githubusercontent.com/upptime/upptime.js.org/master/static/img/icon.svg
-  name: Upptime
-  introTitle: "**Upptime** is the open-source uptime monitor and status page, powered entirely by GitHub."
-  introMessage: This is a sample status page which uses **real-time** data from our [GitHub repository](https://github.com/upptime/upptime). No server required — just GitHub Actions, Issues, and Pages. [**Get your own for free**](https://github.com/upptime/upptime)
+  cname: status.iplaycafe.app
+  name: iPLAYCAFE Status
+  introTitle: "**iPLAYCAFE** service status (.app)"
+  introMessage: Live status of iPLAYCAFE .app services (tracker + app).
   navbar:
     - title: Status
       href: /
     - title: GitHub
-      href: https://github.com/$OWNER/$REPO
+      href: https://github.com/iPLAYCAFE-dev
 
-# Upptime also supports notifications, assigning issues, and more
-# See https://upptime.js.org/docs/configuration
+assignees:
+  - iPLAYCAFE-dev
+
+# notifications:
+#   - type: slack
+#     channel: "#status"
